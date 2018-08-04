@@ -1,17 +1,24 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="boobers">
+      <h1>Consume</h1>
+      <img class="boobers" src="./assets/logo.png">
+      <h1>Prilosec</h1>
+    </div>
+    
+    <h2>Make sure you have enough cash!</h2>
+    <InputList />
+
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import InputList from "./components/InputList.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    InputList
   }
 };
 </script>
@@ -24,5 +31,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#boobers {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 </style>
