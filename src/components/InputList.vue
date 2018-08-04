@@ -1,7 +1,7 @@
 <template>
   <div class="inputer">
-    <input v-model="message" v-on:keyup.enter="add()" placeholder="edit me">  
-    <button v-on:click="add()" type="submit">Add to list</button>
+    <input v-model="message" v-on:keyup.enter="addItem()" placeholder="edit me">  
+    <button v-on:click="addItem()" type="submit">Add to list</button>
     <ul>
       <li v-for="food in foods" :key="food.id">
         {{ food.name }}
@@ -20,14 +20,15 @@ export default {
         { name: "carrots" }, 
         { name: "onions" }
         ],
-      cost: 0,
-      message: ''
+      totalCost: 0,
+      message: ""
     };
   },
   methods: {
-    add: function() {
-      let newFood = { name: this.message }
-      this.foods.push(newFood)
+    addItem: function() {
+      let newFood = { name: this.message };
+      this.foods.push(newFood);
+      this.message = "";
     }
   }
 };
