@@ -1,15 +1,15 @@
 <template>
   <div class="inputer">
     <input v-model="message" v-on:keyup.enter="addItem(), taxCalc()" placeholder="name of food">  
-    <input v-model="foods.cost" v-on:keyup.enter="addItem(), taxCalc()" placeholder="cost of food">  
-    <button v-on:click="addItem()" type="submit">Add to list</button>
+    <input v-model.number="foods.cost" v-on:keyup.enter="addItem(), taxCalc()" placeholder="cost of food">  
+    <button v-on:click="addItem(), taxCalc()" type="submit">Add to list</button>
 
-    <h2>{{ totalCost }}</h2>
+    <h2>{{ totalCost / 100 }}</h2>
     
 
     <ul>
       <li v-for="food in foods" :key="food.id">
-        {{ food.name }} ${{ food.cost }}
+        {{ food.name }} ${{ food.cost / 100 }}
       </li>
     </ul>
   </div>
@@ -21,9 +21,9 @@ export default {
   data() {
     return {
       foods: [
-        { name: "apples", cost: 3.99 },
-        { name: "carrots", cost: 2.79 },
-        { name: "onions", cost: 8.99 }
+        { name: "apples", cost: 399 },
+        { name: "carrots", cost: 279 },
+        { name: "onions", cost: 899 }
       ],
       totalCost: 0,
       message: ""
@@ -45,9 +45,25 @@ export default {
     addItem: function() {
       let newFood = {
         name: this.message,
-        cost: Number(this.foods.cost)
+        cost: this.foods.cost * 100
       };
-      this.foods.push(newFood);
+      
+      let numArr = this.foods.cost;
+      let digits = (""+numArr).split("");
+      
+      console.log(digits);
+
+      if (this.message != ""){
+        if ((digits[digits.length - 3] == ".") && (this.message != "")) {
+          this.foods.push(newFood);
+        } else {
+          alert("cost must be entered in x.xx format")
+        }
+      } else {
+        alert("Please enter a food")
+      }
+        
+
       this.message = "";
       this.foods.cost = "";
     }
