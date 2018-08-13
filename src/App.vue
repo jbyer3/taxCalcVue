@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <div id="boobers">
+    <div id="headers">
       <h1>Consume</h1>
-      <img class="boobers" src="./assets/logo.png">
+      <img class="headers" src="./assets/logo.png">
       <h1>Prilosec</h1>
     </div>
     
@@ -32,7 +32,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-#boobers {
+#headers {
   display: flex;
   flex-direction: row;
   justify-content: center;
