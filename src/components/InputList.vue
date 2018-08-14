@@ -1,5 +1,8 @@
 <template>
   <div class="inputer">
+    <div>
+      <h1>Sales Tax Rate - %<input v-model.number="sTax" placeholder="enter your sales tax rate"></h1>
+    </div>
     <input v-model="message" v-on:keyup.enter="run()" placeholder="name of food">  
     <input v-model.number="foods.cost" v-on:keyup.enter="run()" placeholder="cost of food">  
     <button v-on:click="run()" type="submit">Add to list</button>
@@ -8,11 +11,10 @@
     <h2>CLT Sales Tax - ${{ salesTax }}</h2>
     <h2>Total - ${{ newTotal }}</h2>
 
-    
-    
-    <ul class="listicle">
-      <li v-for="food in foods" :key="food.id">
-        {{ food.name }} ${{ food.cost / 100 }}
+    <ul class="liszt">
+      <li v-for="(food, index) in foods" :key="food.id" :index="index" v-on:remove="foods.splice(index, 1)">
+        {{ food.name }} ... ${{ food.cost / 100 }}
+        <button v-on:click="dleet(index)">x</button>
       </li>
     </ul>
   </div>
@@ -29,6 +31,7 @@ export default {
         { name: "onions", cost: 899 }
       ],
       totalCost: 1577,
+      sTax: 0,
       message: ""
     };
   },
@@ -67,6 +70,10 @@ export default {
     run: function() {
       this.addItem();
       this.subtCalc();
+    },
+    dleet: function(index) {
+      this.foods.splice(index, 1);
+      this.subtCalc();
     }
   },
   computed: {
@@ -74,29 +81,14 @@ export default {
       return this.totalCost / 100;
     },
     salesTax: function() {
-      let bigTax = this.subTotal * 725;
+      let bigTax = this.subTotal * (this.sTax * 100);
       let smallTax = bigTax / 10000;
       let realTax = Math.round(smallTax * 100) / 100;
-      // check to see if number is x.xx or x.x, and if it is x.x add a 0 to the end of it
-      let digits = ("" + realTax).split("");
-      // if number is x.xx return the number
-      if (digits[digits.length - 3] == ".") {
-        return realTax;
-        // if number is x.x return x.x0
-      } else if (digits[digits.length - 2] == ".") {
-        let fixDigits = digits.push("0");
-        // rejoin new array
-        return parseFloat(fixDigits);
-        // if number is x return x.00
-      } else {
-        let fixDigitsArray1 = digits.push("0");
-        let fixDigitsArray = fixDigitsArray1.push("0");
-        //rejoin new array
-        return parseFloat(fixDigitsArray);
-      }
+      return realTax;
     },
     newTotal: function() {
-      return this.subTotal + this.salesTax;
+      let totes = this.subTotal + this.salesTax;
+      return Math.round(totes * 100) / 100;
     }
   }
 };
