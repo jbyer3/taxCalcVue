@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="headers">
-      <h1>Consume</h1>
+      <h1>Sales Tax</h1>
       <img class="headers" src="./assets/logo.png">
-      <h1>Prilosec</h1>
+      <h1>Calculator</h1>
     </div>
     
     <h2>Make sure you have enough cash!</h2>
