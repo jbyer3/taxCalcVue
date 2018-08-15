@@ -1,30 +1,35 @@
 <template>
-  <div class="inputer">
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ input for maxCost variable ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <div>
-      <h1>How much money can you spend?</h1>
-      <input v-model.number="maxCost">
+  <div class="wrapper">
+    <div class="left">
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ input for maxCost variable ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+      
+        <h3>How much money can you spend?</h3>
+        <input v-model.number="maxCost">
+      
+      <!-- ~~~~~~~ alert stating that you're spending more than you have e.g. maxCost < totalCost~~~~~~~~~~~~ -->
+      <div v-if="costCheck() == true">
+        <h4>Uh oh..... You're spending too much! Maybe consider putting something back...</h4>
+        <!-- TODO create a function to suggest putting back the most expensive item -->
+      </div>
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~ input for sales tax (sTax) variable ~~~~~~~~~~~~~~~~~~~~~~~ -->
+      <div>
+        <h3>Sales Tax Rate</h3>
+        <input v-model.number="sTax"
+          class="rattattoo" 
+          placeholder="enter your sales tax rate">%
+      </div>
+      <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~ main input for food name and cost ~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+      <input v-model="message" v-on:keyup.enter="run()" placeholder="name of food">  
+      <input v-model.number="foods.cost" v-on:keyup.enter="run()" placeholder="cost of food">  
+      <!-- button to call run function that creates the list and adds up the costs of everything -->
+      <button v-on:click="run()" type="submit">Add to list</button>
+      <!-- ~~~~~~~~~~~~~~~~~~~~ where everything cost related is printed out ~~~~~~~~~~~~~~~~~~~~   -->
+      <h3>SubTotal - ${{ subTotal }}</h3>
+      <h3>CLT Sales Tax - ${{ salesTax }}</h3>
+      <h3>Total - ${{ newTotal }}</h3>
     </div>
-    <!-- ~~~~~~~ alert stating that you're spending more than you have e.g. maxCost < totalCost~~~~~~~~~~~~ -->
-    <div v-if="costCheck() == true">
-      <h4>Uh oh..... You're spending too much! Maybe consider putting something back...</h4>
-      <!-- TODO create a function to suggest putting back the most expensive item -->
-    </div>
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~ input for sales tax (sTax) variable ~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <div>
-      <h1>Sales Tax Rate - %<input v-model.number="sTax" placeholder="enter your sales tax rate"></h1>
-    </div>
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~ main input for food name and cost ~~~~~~~~~~~~~~~~~~~~~~~~~  -->
-    <input v-model="message" v-on:keyup.enter="run()" placeholder="name of food">  
-    <input v-model.number="foods.cost" v-on:keyup.enter="run()" placeholder="cost of food">  
-    <!-- button to call run function that creates the list and adds up the costs of everything -->
-    <button v-on:click="run()" type="submit">Add to list</button>
-    <!-- ~~~~~~~~~~~~~~~~~~~~ where everything cost related is printed out ~~~~~~~~~~~~~~~~~~~~   -->
-    <h2>SubTotal - ${{ subTotal }}</h2>
-    <h2>CLT Sales Tax - ${{ salesTax }}</h2>
-    <h2>Total - ${{ newTotal }}</h2>
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ main list ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <ul class="liszt">
+    <ul class="right">
       <li v-for="(food, index) in foods" :key="food.id" :index="index" v-on:remove="foods.splice(index, 1)">
         {{ food.name }} ... ${{ food.cost / 100 }}
         <button v-on:click="dleet(index)">x</button>
@@ -44,8 +49,8 @@ export default {
         { name: "onions", cost: 899 }
       ],
       totalCost: 1577, //cost originally listed without decimal point to avoid float-math-hell
-      sTax: 0, //variable to initialize sales tax
-      maxCost: 0, //variable initializing the most we can spend
+      sTax: 7.25, //variable to initialize sales tax
+      maxCost: 35, //variable initializing the most we can spend
       message: ""
     };
   },
@@ -65,7 +70,7 @@ export default {
           this.foods.push(newFood);
         } else {
           alert("cost must be entered in x.xx format");
-          console.log(numArr)
+          console.log(numArr);
         }
       } else {
         alert("Please enter a food");
@@ -130,7 +135,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-* {
-  background-color: chartreuse;
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 200px;
+  max-width: 400px;
+  .rattattoo {
+    width: 35px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 200px;
+  max-width: 400px;
 }
 </style>
