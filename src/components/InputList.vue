@@ -1,16 +1,9 @@
 <template>
   <div class="wrapper">
-    <div class="left">
+    <div class="card">
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ input for maxCost variable ~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-      
-        <h3>How much money can you spend?</h3>
-        <input v-model.number="maxCost">
-      
-      <!-- ~~~~~~~ alert stating that you're spending more than you have e.g. maxCost < totalCost~~~~~~~~~~~~ -->
-      <div v-if="costCheck() == true">
-        <h4>Uh oh..... You're spending too much! Maybe consider putting something back...</h4>
-        <!-- TODO create a function to suggest putting back the most expensive item -->
-      </div>
+      <h3>How much money can you spend?</h3>
+      <input v-model.number="maxCost">
       <!-- ~~~~~~~~~~~~~~~~~~~~~~~ input for sales tax (sTax) variable ~~~~~~~~~~~~~~~~~~~~~~~ -->
       <div>
         <h3>Sales Tax Rate</h3>
@@ -23,18 +16,30 @@
       <input v-model.number="foods.cost" v-on:keyup.enter="run()" placeholder="cost of food">  
       <!-- button to call run function that creates the list and adds up the costs of everything -->
       <button v-on:click="run()" type="submit">Add to list</button>
-      <!-- ~~~~~~~~~~~~~~~~~~~~ where everything cost related is printed out ~~~~~~~~~~~~~~~~~~~~   -->
-      <h3>SubTotal - ${{ subTotal }}</h3>
-      <h3>CLT Sales Tax - ${{ salesTax }}</h3>
-      <h3>Total - ${{ newTotal }}</h3>
     </div>
-    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ main list ~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    <ul class="right">
-      <li v-for="(food, index) in foods" :key="food.id" :index="index" v-on:remove="foods.splice(index, 1)">
-        {{ food.name }} ... ${{ food.cost / 100 }}
-        <button v-on:click="dleet(index)">x</button>
-      </li>
-    </ul>
+    <!-- <div class="seperator"></div> -->
+    <div class="card">
+       <!-- ~~~~~~~~~~~~~~~~~~~~ where everything cost related is printed out ~~~~~~~~~~~~~~~~~~~~   -->
+      <h3>SubTotal - ${{ subTotal }}</h3>
+      <h3>+ Sales Tax - ${{ salesTax }}</h3>
+      <hr>
+      <h3>= Total - ${{ newTotal }}</h3>
+      <!-- ~~~~~~~ alert stating that you're spending more than you have e.g. maxCost < totalCost~~~~~~~~~~~~ -->
+      <div v-if="costCheck() == true">
+        <h4 class="danger">Uh oh..... You're spending too much! Maybe consider putting something back... </h4>
+        <!-- TODO create a function to suggest putting back the most expensive item -->
+      </div>
+    </div>
+    <!-- <div class="seperator"></div> -->
+    <div class="card" id="list">
+      <ul>
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ main list ~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <li v-for="(food, index) in foods" :key="food.id" :index="index" v-on:remove="foods.splice(index, 1)">
+          {{ food.name }} ... ${{ food.cost / 100 }}
+          <button v-on:click="dleet(index)">x</button>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -48,6 +53,7 @@ export default {
         { name: "carrots", cost: 279 },
         { name: "onions", cost: 899 }
       ],
+      costArray: [],
       totalCost: 1577, //cost originally listed without decimal point to avoid float-math-hell
       sTax: 7.25, //variable to initialize sales tax
       maxCost: 35, //variable initializing the most we can spend
@@ -138,28 +144,57 @@ export default {
 .wrapper {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   justify-content: space-around;
+  align-items: center;
 }
-.left {
+.card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  min-width: 200px;
-  max-width: 400px;
+  justify-content: flex-start;
+  width: 322px;
+  height: 300px;
+  background-color: #888888;
+  border-radius: 23px;
+  padding: 12px;
+  margin: 10px;
+  #list {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    justify-content: flex-start;
+    min-width: 200px;
+    max-width: 400px;
+    text-align: left;
+  }
+  hr {
+    background-color: black;
+    width: 100%;
+  }
   .rattattoo {
     width: 35px;
     text-align: center;
     margin-bottom: 20px;
   }
 }
-.right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-width: 200px;
-  max-width: 400px;
+
+@media only screen and (max-device-width: 1073px) { 
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .card{
+      width: 75%;
+      height: 100%;
+    }
+  }
+}
+// .seperator {
+//   width: 10px;
+//   height: 100%;
+// }
+.danger {
+  color: red;
 }
 </style>

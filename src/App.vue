@@ -25,9 +25,17 @@ export default {
 
 <style lang="scss">
 body {
-  background: #dd3e54;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #6be585, #dd3e54);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #6be585, #dd3e54); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #EDE574;  /* fallback for old browsers */
+  //eslint-disable-next-line
+  background: -webkit-linear-gradient(to right, #E1F5C4, #EDE574);  /* Chrome 10-25, Safari 5.1-6 */
+  //eslint-disable-next-line
+  background: linear-gradient(to right, #E1F5C4, #EDE574); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  // background: #283c86;  /* fallback for old browsers */
+  // //eslint-disable-next-line
+  // background: -webkit-linear-gradient(to right, #45a247, #283c86);  /* Chrome 10-25, Safari 5.1-6 */
+  // //eslint-disable-next-line
+  // background: linear-gradient(to right, #45a247, #283c86); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 #app {
