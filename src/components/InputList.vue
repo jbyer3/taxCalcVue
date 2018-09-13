@@ -65,18 +65,18 @@ export default {
       //create new food object
       let newFood = {
         name: this.message,
-        cost: this.foods.cost * 100 // multiply the cost input by 100 to avoid float-math-hell
+        cost: parseInt(this.foods.cost * 100) // multiply the cost input by 100 to avoid float-math-hell
       };
 
       //check if type is number.
-
-      let costner = this.foods.cost
-      if (typeof costner == "number"){
-        //success! push new food into list
+      if (typeof this.foods.cost == "number" && newFood.name != ""){
+        //success! its a number in the input box, now check if its suitably in a "cash format"
         this.foods.push(newFood)
-      } else {
+      } else if (typeof this.foods.cost != "number"){
         //fail! try again
         alert("please enter a cost")
+      } else if (newFood.name == ""){
+        alert("please enter a food name")
       }
 
       //typeof costner == "number" ? this.foods.push(newFood) : alert("please enter a cost!")
