@@ -67,20 +67,21 @@ export default {
         name: this.message,
         cost: this.foods.cost * 100 // multiply the cost input by 100 to avoid float-math-hell
       };
-      // validations for the submission of a new food item
-      //broken section
-      let numArr = this.foods.cost;
-      let digits = ("" + numArr).split("");
-      if (this.message != "") {
-        if (digits[digits.length - 3] == ".") {
-          this.foods.push(newFood);
-        } else {
-          alert("cost must be entered in x.xx format");
-          console.log(numArr);
-        }
+
+      //check if type is number.
+
+      let costner = this.foods.cost
+      if (typeof costner == "number"){
+        //success! push new food into list
+        this.foods.push(newFood)
       } else {
-        alert("Please enter a food");
+        //fail! try again
+        alert("please enter a cost")
       }
+
+      //typeof costner == "number" ? this.foods.push(newFood) : alert("please enter a cost!")
+
+
       // clear inputs after submission pass/fail
       this.message = "";
       this.foods.cost = "";
