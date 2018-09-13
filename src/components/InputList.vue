@@ -20,7 +20,7 @@
     <!-- <div class="seperator"></div> -->
     <div class="card">
        <!-- ~~~~~~~~~~~~~~~~~~~~ where everything cost related is printed out ~~~~~~~~~~~~~~~~~~~~   -->
-      <h3>SubTotal - ${{ subTotal }}</h3>
+      <h3>Sub Total - ${{ subTotal }}</h3>
       <h3>+ Sales Tax - ${{ salesTax }}</h3>
       <hr>
       <h3>= Total - ${{ newTotal }}</h3>
